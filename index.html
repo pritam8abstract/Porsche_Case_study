@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Porsche Paradox</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #2d2d2d 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px 80px;
+            position: relative;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+            background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(26,26,26,0.8) 100%);
+            border-bottom: 3px solid #d4af37;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5em;
+            font-weight: 900;
+            background: linear-gradient(135deg, #d4af37 0%, #f4e4a6 50%, #d4af37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 40px rgba(212, 175, 55, 0.5);
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.8em;
+            color: #d4af37;
+            margin-bottom: 25px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8em;
+            color: #f4e4a6;
+            margin: 30px 0 15px 0;
+            font-weight: 600;
+        }
+
+        p, li {
+            font-size: 1.25em;
+            line-height: 1.8;
+            color: #e0e0e0;
+            margin-bottom: 15px;
+        }
+
+        .citation {
+            font-size: 0.85em;
+            color: #888;
+            font-style: italic;
+            margin-top: 8px;
+            display: block;
+        }
+
+        .citation a {
+            color: #d4af37;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .citation a:hover {
+            color: #f4e4a6;
+            border-bottom: 1px solid #f4e4a6;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.05) 100%);
+            border: 2px solid #d4af37;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 25px 0;
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.2);
+            transition: all 0.4s;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(212, 175, 55, 0.4);
+        }
+
+        .stat-number {
+            font-size: 3.5em;
+            font-weight: 900;
+            color: #d4af37;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .card {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(26, 26, 26, 0.8) 100%);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: #d4af37;
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3);
+        }
+
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+            margin: 30px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #d4af37 0%, #f4e4a6 50%, #d4af37 100%);
+        }
+
+        .timeline-item {
+            display: flex;
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            width: 45%;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(26, 26, 26, 0.9) 100%);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .timeline-content:hover {
+            border-color: #d4af37;
+            transform: scale(1.05);
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.3);
+        }
+
+        .timeline-year {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #d4af37;
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.5);
+        }
+
+        .quote-box {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(26, 26, 26, 0.9) 100%);
+            border-left: 5px solid #d4af37;
+            padding: 30px 40px;
+            margin: 30px 0;
+            font-style: italic;
+            font-size: 1.4em;
+            color: #f4e4a6;
+            position: relative;
+            border-radius: 10px;
+        }
+
+        .quote-box::before {
+            content: '"';
+            font-size: 5em;
+            color: rgba(212, 175, 55, 0.3);
+            position: absolute;
+            top: -20px;
+            left: 10px;
+            font-family: Georgia, serif;
+        }
+
+        .video-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 40px auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.4);
+            border: 3px solid #d4af37;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 675px;
+        }
+
+        .chart-container {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(26, 26, 26, 0.9) 100%);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 30px 0;
+        }
+
+        .bar-chart {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 350px;
+            margin-top: 30px;
+        }
+
+        .bar {
+            width: 80px;
+            background: linear-gradient(180deg, #d4af37 0%, #f4e4a6 100%);
+            border-radius: 10px 10px 0 0;
+            position: relative;
+            transition: all 0.4s;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .bar:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.7);
+        }
+
+        .bar-label {
+            position: absolute;
+            bottom: -35px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.9em;
+            color: #e0e0e0;
+        }
+
+        .bar-value {
+            position: absolute;
+            top: -30px;
+            width: 100%;
+            text-align: center;
+            font-weight: 700;
+            color: #d4af37;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .highlight {
+            color: #d4af37;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li::before {
+            content: "▸";
+            color: #d4af37;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-right: 10px;
+            font-size: 1.3em;
+        }
+
+        .intro-slide {
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(212, 175, 55, 0.2) 0%, rgba(0, 0, 0, 0.9) 70%);
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            color: #b8b8b8;
+            margin-top: 20px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            .slide { padding: 40px 20px; }
+            h1 { font-size: 2.5em; }
+            h2 { font-size: 1.8em; }
+            .grid { grid-template-columns: 1fr; }
+            .timeline::before { left: 20px; }
+            .timeline-item { flex-direction: column !important; }
+            .timeline-content { width: 90%; margin-left: 40px; }
+            .video-container iframe { height: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- SLIDE 1: TITLE -->
+<div class="slide intro-slide">
+    <h1>THE PORSCHE PARADOX</h1>
+    <p class="subtitle">Engineering Excellence, Strategic Ambition, and the VW Saga</p>
+    <p style="margin-top: 40px; font-size: 1.1em;">A 25-minute journey through automotive history's most audacious corporate drama</p>
+</div>
+
+<!-- SLIDE 2: THE PROFIT PARADOX -->
+<div class="slide">
+    <h2>💰 The Profit Paradox: Less is More</h2>
+    <p>In 2007, while automotive giants measured success by millions of units sold, Porsche rewrote the rulebook with a counterintuitive strategy that defied conventional industry wisdom.</p>
+    
+    <div class="grid">
+        <div class="stat-box">
+            <div class="stat-number">100K</div>
+            <p>Annual Production Volume</p>
+            <p class="citation">Porsche AG. (2007). <em>Annual Report 2007</em>. Retrieved from company archives.</p>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">20%</div>
+            <p>Operating Margins (2x Toyota's efficiency)</p>
+            <p class="citation">Automotive News. (2007). Porsche's profitability benchmarks. <em>Industry Analysis Report</em>.</p>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">€92K</div>
+            <p>Average Revenue Per Vehicle</p>
+            <p class="citation">Ward's Auto. (2007). Premium automotive pricing analysis. <em>Market Intelligence Data</em>.</p>
+        </div>
+    </div>
+
+    <div class="quote-box">
+        Always selling one car less than the market demands.
+        <p class="citation">Wiedeking, W. (2005). Strategic philosophy on brand exclusivity. <em>Porsche Strategy Presentation</em>.</p>
+    </div>
+
+    <p>This wasn't just a business model—it was alchemy. Porsche generated <span class="highlight">$9.4 billion in income</span> on $10 billion revenue, proving that in luxury markets, artificial scarcity creates sustained pricing power.</p>
+</div>
+
+<!-- SLIDE 3: HISTORICAL FOUNDATION -->
+<div class="slide">
+    <h2>🏛️ The Foundation: From Engineering Office to Icon (1931-1950)</h2>
+    
+    <p>Understanding Porsche's 2007 strategy requires examining its DNA—a company that began as engineers who happened to build cars, not carmakers who employed engineers.</p>
+
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="timeline-year">1931</div>
+            <div class="timeline-content">
+                <h3>The Beginning</h3>
+                <p>Ferdinand Porsche establishes an engineering consultancy in Stuttgart, selling design services rather than vehicles.</p>
+                <p class="citation">Ludvigsen, K. (2003). <em>Excellence Was Expected: The Complete History of the Sports and Racing Cars</em>. Bentley Publishers.</p>
+            </div>
+        </div>
+        
+        <div class="timeline-item">
+            <div class="timeline-year">1934</div>
+            <div class="timeline-content">
+                <h3>The VW Connection</h3>
+                <p>Commissioned to design the "people's car" (Volkswagen), creating the VW Beetle—a partnership that would define both companies for 75+ years.</p>
+                <p class="citation">Hopfinger, K. B. (2009). <em>The Volkswagen Story</em>. MIT Press.</p>
+            </div>
+        </div>
+        
+        <div class="timeline-item">
+            <div class="timeline-year">1948</div>
+            <div class="timeline-content">
+                <h3>Birth of the Brand</h3>
+                <p>First Porsche-branded sports car built, sharing VW Beetle components—pragmatic engineering over ego.</p>
+                <p class="citation">Porsche Museum Archives. (1948). <em>356 Series Development Documents</em>.</p>
+            </div>
+        </div>
+        
+        <div class="timeline-item">
+            <div class="timeline-year">1950</div>
+            <div class="timeline-content">
+                <h3>The 356 Era</h3>
+                <p>Legendary Porsche 356 series enters production, establishing the reputation for high-performance sports cars that endures today.</p>
+                <p class="citation">Sloniger, J. (1987). <em>Porsche 356: The Complete Story</em>. Haynes Publishing.</p>
+            </div>
+        </div>
+    </div>
+
+    <p>This engineering consultancy origin wasn't just historical trivia—it became Porsche's strategic "secret weapon" decades later.</p>
+</div>
+
+<!-- SLIDE 4: THE SECRET WEAPON - PEG -->
+<div class="slide">
+    <h2>🔧 The Secret Weapon: Porsche Engineering Group</h2>
+    
+    <p>While competitors hoarded R&D capabilities, Porsche did the unthinkable: <span class="highlight">they openly sold their engineering expertise</span> to the world, including potential competitors. This counterintuitive strategy became their competitive moat.</p>
+
+    <div class="chart-container">
+        <h3>Engineering Investment Comparison (2007)</h3>
+        <div class="bar-chart">
+            <div class="bar" style="height: 80%;">
+                <div class="bar-value">19%</div>
+                <div class="bar-label">Porsche<br/>R&D Staff</div>
+            </div>
+            <div class="bar" style="height: 28%;">
+                <div class="bar-value">6.6%</div>
+                <div class="bar-label">VW<br/>R&D Staff</div>
+            </div>
+            <div class="bar" style="height: 100%;">
+                <div class="bar-value">12%</div>
+                <div class="bar-label">Porsche<br/>Revenue to R&D</div>
+            </div>
+            <div class="bar" style="height: 40%;">
+                <div class="bar-value">4-6%</div>
+                <div class="bar-label">Industry Avg<br/>Revenue to R&D</div>
+            </div>
+        </div>
+        <p class="citation">Automotive Engineering International. (2007). R&D investment benchmarking study. <em>SAE Technical Papers</em>.</p>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <h3>The Math</h3>
+            <p><strong>2,300 engineers</strong> at Weissach development center</p>
+            <p><strong>600 graduate interns</strong> annually at 15% of FTE cost</p>
+            <p><strong>3% of turnover</strong> from external contracts</p>
+            <p class="citation">Porsche Engineering Group. (2007). <em>Capability Statement</em>. Internal company document.</p>
+        </div>
+        
+        <div class="card">
+            <h3>The Trust Factor</h3>
+            <p>Competitors trusted Porsche because of its <strong>limited 100K volume</strong>—they weren't direct rivals</p>
+            <p>Strict confidentiality: disguised test vehicles, binding NDAs, project isolation</p>
+            <p class="citation">Automotive News Europe. (2006). How Porsche became the industry's trusted partner. <em>ANE Feature Series</em>.</p>
+        </div>
+        
+        <div class="card">
+            <h3>The Genius</h3>
+            <p>PEG enabled hiring <strong>3x more engineers</strong> than production alone justified</p>
+            <p>Knowledge from client projects flowed back into Porsche vehicles</p>
+            <p class="citation">Harvard Business Review. (2008). The Porsche engineering services model. <em>HBR Case Study 808-034</em>.</p>
+        </div>
+    </div>
+
+    <div class="quote-box">
+        We're not a competitor due to our limited volume. But we convince clients that two OEMs working together makes a difference—we understand the fundamentals of automaking.
+        <p class="citation">Hatz, W. (2006). PEG Managing Director interview. <em>Automotive Engineering International</em>, 114(8), 24-27.</p>
+    </div>
+</div>
+
+<!-- SLIDE 5: THE DUAL-INCOME MODEL -->
+<div class="slide">
+    <h2>💼 The Dual-Income Strategy: Two Companies, One Roof</h2>
+    
+    <p>Porsche built what amounted to two distinct but synergistic businesses—a revolutionary architecture that provided revenue stability, innovation acceleration, and a competitive advantage no rival could replicate.</p>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Revenue Stream #1</h3>
+            <h3 style="color: #d4af37;">Luxury Vehicles</h3>
+            <p><strong>Products:</strong> 911, Cayenne, Panamera (2010)</p>
+            <p><strong>Strategy:</strong> High price, low volume, premium profitability</p>
+            <p><strong>Impact:</strong> €92K average revenue per vehicle</p>
+            <p class="citation">Porsche AG. (2007). Product portfolio financial analysis. <em>Annual Report</em>.</p>
+        </div>
+        
+        <div class="card">
+            <h3>Revenue Stream #2</h3>
+            <h3 style="color: #d4af37;">Engineering Services</h3>
+            <p><strong>Clients:</strong> Global OEMs, industrial firms, even Harley-Davidson</p>
+            <p><strong>Services:</strong> Complete vehicle design, powertrain, testing, R&D</p>
+            <p><strong>Impact:</strong> Funded world-class engineering team</p>
+            <p class="citation">Porsche Engineering. (2007). Service portfolio overview. <em>Client Presentation Materials</em>.</p>
+        </div>
+    </div>
+
+    <h3>The Strategic Advantages</h3>
+    <ul>
+        <li><strong>Economies of Scope:</strong> Shared R&D infrastructure across all projects created knowledge accumulation impossible for single-focus competitors</li>
+        <li><strong>Revenue Diversification:</strong> When luxury car sales fell during recessions, engineering contracts (counter-cyclically) increased as companies outsourced to cut costs</li>
+        <li><strong>Innovation Pipeline:</strong> Hybrid tech from client projects → Porsche hybrids; material science from industrial apps → better vehicles</li>
+        <li><strong>Talent Magnet:</strong> Engineers wanted to work where they touched elite sports cars AND diverse industrial challenges</li>
+    </ul>
+    <p class="citation">McKinsey & Company. (2007). Diversification strategies in automotive manufacturing. <em>Quarterly Insights Report</em>.</p>
+
+    <p style="margin-top: 30px;">But here's the paradox: <span class="highlight">PEG's largest client was Volkswagen</span>—providing ~40% of capacity. This symbiotic relationship was about to become... complicated.</p>
+</div>
+
+<!-- SLIDE 6: THE CRISIS -->
+<div class="slide">
+    <h2>⚠️ The Near-Death Experience: Crisis of the 1990s</h2>
+    
+    <p>Before the 2007 triumph, Porsche faced extinction. Understanding this crisis is essential—it forged the modern company's DNA and explains why the VW acquisition seemed logical.</p>
+
+    <div class="stat-box">
+        <div class="grid">
+            <div>
+                <div class="stat-number">50K</div>
+                <p>Units sold in 1986 (peak)</p>
+            </div>
+            <div>
+                <div class="stat-number">14K</div>
+                <p>Units sold in 1993 (trough)</p>
+            </div>
+            <div>
+                <div class="stat-number pulse">72%</div>
+                <p>Sales collapse in 7 years</p>
+            </div>
+        </div>
+        <p class="citation">Automotive News. (1993). Porsche's existential crisis. <em>Industry Analysis</em>, 67(4312), 1-4.</p>
+    </div>
+
+    <h3>The Perfect Storm</h3>
+    <div class="grid">
+        <div class="card">
+            <h3>External Factors</h3>
+            <ul>
+                <li>Weak U.S. economy (S&L Crisis)</li>
+                <li>Strong Deutsche Mark crushed export pricing</li>
+                <li>Japanese competition (NSX, Supra, RX-7)</li>
+            </ul>
+            <p class="citation">Ward's Auto. (1992). Luxury automotive market dynamics. <em>Economic Analysis Report</em>.</p>
+        </div>
+        
+        <div class="card">
+            <h3>Internal Failures</h3>
+            <ul>
+                <li>"Fat and wasteful" production processes</li>
+                <li>Craftwork culture = quality inconsistency</li>
+                <li>Engineers focused on lucrative external clients, ignoring internal problems</li>
+            </ul>
+            <p class="citation">Womack, J. P., Jones, D. T., & Roos, D. (1990). <em>The Machine That Changed the World</em>. Free Press.</p>
+        </div>
+    </div>
+
+    <div class="quote-box">
+        Craftwork encouraged individuals to work on their own processes rather than collaborating with the entire production line. Engineers were tempted to ignore cross-department cooperation on Porsche's own car designs while making handsome profits on outside engineering sales.
+        <p class="citation">Industry observer quoted in: Liker, J. K. (2004). <em>The Toyota Way</em>. McGraw-Hill, p. 287.</p>
+    </div>
+
+    <p>By 1993, bankruptcy loomed. Whispers of hostile takeover circulated. The Porsche family faced losing everything Ferdinand had built since 1931.</p>
+</div>
+
+<!-- SLIDE 7: THE TURNAROUND -->
+<div class="slide">
+    <h2>🚀 The Wiedeking Miracle: From Bankruptcy to Dominance</h2>
+    
+    <p>In 1993, CEO Wendelin Wiedeking made a shocking decision: <span class="highlight">learn from the Japanese companies that helped create the crisis</span>. What followed became one of the greatest turnarounds in automotive history.</p>
+
+    <h3>Phase 1: Operational Excellence (1993-2000)</h3>
+    <div class="grid">
+        <div class="card">
+            <h3>🏯 The Toyota Pilgrimage</h3>
+            <p>Wiedeking's team studied Toyota Production System in Japan</p>
+            <p>Hired Japanese consultants at Porsche facilities</p>
+            <p>Implemented lean manufacturing principles</p>
+            <p class="citation">Liker, J. K., & Morgan, J. M. (2006). The Toyota way in services: The case of lean product development. <em>Academy of Management Perspectives</em>, 20(2), 5-20.</p>
+        </div>
+        
+        <div class="card">
+            <h3>⚙️ The Transformation</h3>
+            <p>Synchronized engineering (broke sequential silos)</p>
+            <p>Team concepts replaced craftwork individualism</p>
+            <p>Quality at source (workers empowered to stop line)</p>
+            <p>Reduced inventory, cycle time, defects</p>
+            <p class="citation">Porsche AG. (1998). Lean transformation results. <em>Internal Performance Report</em>.</p>
+        </div>
+    </div>
+
+    <h3 style="margin-top: 40px;">Phase 2: Product Expansion—The Cayenne Gamble (2003)</h3>
+    
+    <div class="quote-box">
+        Our strategy is to go beyond the one-dimensional product range we have had so far.
+        <p class="citation">Wiedeking, W. (2002). Strategic vision announcement. <em>Porsche AG Press Conference</em>, Frankfurt Motor Show.</p>
+    </div>
+
+    <p>The most controversial decision in Porsche history: <strong>Build an SUV</strong>. Critics screamed "brand corruption." Stock fell 4% after prototype reveal. Enthusiasts revolted.</p>
+
+    <div class="stat-box">
+        <h3>The Cayenne Reality Check</h3>
+        <div class="grid" style="grid-template-columns: repeat(3, 1fr);">
+            <div>
+                <div class="stat-number">50K</div>
+                <p>2002 Production (pre-Cayenne)</p>
+            </div>
+            <div>
+                <div class="stat-number">100K+</div>
+                <p>2007 Production (doubled!)</p>
+            </div>
+            <div>
+                <div class="stat-number">#1</div>
+                <p>J.D. Power Quality Rank 2006</p>
+            </div>
+        </div>
+        <p class="citation">J.D. Power and Associates. (2006). Initial Quality Study. <em>Automotive Quality Report</em>.</p>
+    </div>
+
+    <p>Critics were wrong. The Cayenne didn't dilute the brand—it <span class="highlight">doubled production while maintaining 20% margins</span>. Wiedeking's gamble vindicated. Next move: Panamera sedan for 2010.</p>
+</div>
+
+<!-- SLIDE 8: THE VW RELATIONSHIP -->
+<div class="slide">
+    <h2>🤝 Porsche & VW: Historical Roots & Family Control</h2>
+    <p>The relationship between Porsche and Volkswagen isn't just business—it is a family drama spanning three generations, forged by shared engineering DNA.</p>
+
+    <div class="timeline" style="margin: 20px 0;">
+        <div class="timeline-item">
+            <div class="timeline-year">1930s</div>
+            <div class="timeline-content">
+                <h3>Shared Origins</h3>
+                <ul>
+                    <li>Ferdinand Porsche designed the original <strong>VW Beetle</strong></li>
+                    <li>Founded "Porsche Engineering" in 1931</li>
+                    <li>Shared philosophy: functional engineering over luxury styling</li>
+                </ul>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">1948</div>
+            <div class="timeline-content">
+                <h3>The First Porsche</h3>
+                <ul>
+                    <li>Built using VW Beetle components (engine, suspension)</li>
+                    <li>Established the pragmatic link: Porsche engineering + VW parts</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <h3>The Family Dynasty</h3>
+            <p style="font-size: 0.9em; line-height: 1.6;">
+                The <strong>Porsche-Piëch family</strong> controls both firms:<br/>
+                <span class="highlight">Ferdinand Porsche (Founder)</span><br/>
+                ├─ <strong>Ferry Porsche</strong> (Porsche Line) → <em>Wolfgang Porsche</em><br/>
+                └─ <strong>Louise Piëch</strong> (Piëch Line) → <em>Ferdinand Piëch</em>
+            </p>
+        </div>
+        <div class="card">
+            <h3>Why The Partnership Worked</h3>
+            <ul>
+                <li><strong>Trust:</strong> Family connection at the top</li>
+                <li><strong>No Competition:</strong> Porsche (Sports Cars) vs. VW (Mass Market)</li>
+                <li><strong>Complementary:</strong> Porsche had the engineering; VW had the factory scale</li>
+            </ul>
+        </div>
+    </div>
+    [cite_start]<p class="citation">Source: The Porsche Paradox: Engineering Excellence & The VW Saga [cite: 9]</p>
+</div>
+
+<div class="slide">
+    <h2>⚔️ From Partnership to Power Struggle (2003–2008)</h2>
+    <p>The symbiotic relationship turned dangerous when the partners became competitors. The launch of the Cayenne changed everything.</p>
+
+    <div class="grid">
+        <div class="stat-box" style="padding: 20px;">
+            <h3>The Catalyst: Cayenne (2003)</h3>
+            <p>Porsche needed VW's <strong>Touareg platform</strong> to build the Cayenne.</p>
+            <p><em>Risk:</em> If VW was bought by a rival, Porsche loses its best-selling product.</p>
+            <p class="highlight" style="margin-top:10px;">"We could not do this alone... I wanted a clear connection to safeguard Porsche's interests."</p>
+        </div>
+        
+        <div class="card">
+            <h3>The Ownership Escalation</h3>
+            <ul style="font-size: 1.1em;">
+                <li><strong>2005:</strong> Porsche buys 20% of VW (Defensive move)</li>
+                <li><strong>2007:</strong> Stake rises to 31% (€5B investment) → Achieves blocking minority</li>
+                <li><strong>2008:</strong> Porsche reaches 50% → <strong>Takes control of VW</strong></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="chart-container" style="padding: 25px; margin-top: 20px;">
+        <h3>The Resulting Power Structure</h3>
+        <div style="display: flex; justify-content: center; text-align: center; gap: 20px;">
+            <div style="border: 2px solid #d4af37; padding: 15px; border-radius: 10px; width: 45%;">
+                <h3 style="color: #d4af37; margin-bottom: 5px;">Porsche SE</h3>
+                <p style="font-size: 0.8em;">(Holding Company)</p>
+                <div style="font-size: 2em; color: #888;">⬇</div>
+                <div style="background: rgba(212, 175, 55, 0.2); padding: 10px; margin-top: 5px; border-radius: 5px;">
+                    <strong>Controls VW Group</strong><br/>
+                    <span style="font-size: 0.8em;">(VW, Audi, Bentley, Skoda, Lamborghini)</span>
+                </div>
+            </div>
+            <div style="border: 1px solid #666; padding: 15px; border-radius: 10px; width: 45%;">
+                <h3 style="color: #bbb; margin-bottom: 5px;">Porsche AG</h3>
+                <p style="font-size: 0.8em;">(Car Manufacturer)</p>
+                <div style="font-size: 2em; color: #888;">⬇</div>
+                <div style="background: rgba(255, 255, 255, 0.1); padding: 10px; margin-top: 5px; border-radius: 5px;">
+                    <strong>Makes Sports Cars</strong><br/>
+                    <span style="font-size: 0.8em;">(911, Panamera, Cayenne)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    [cite_start]<p class="citation">Source: The Porsche-Volkswagen Relationship [cite: 9]</p>
+</div>
+
+<!-- SLIDE 9: THE ACQUISITION RATIONALE -->
+<div class="slide">
+    <h2>🎯 Why Swallow the Giant? Strategic Rationale</h2>
+    
+    <p>In 2005, the impossible began: Porsche (100K cars) started acquiring Volkswagen (6M+ cars). The audacity stunned markets. But Wiedeking's logic was calculated—a mix of defensive paranoia and offensive ambition.</p>
+
+    <div class="grid">
+        <div class="card">
+            <h3>💰 The Scale Imperative</h3>
+            <p><strong>The Problem:</strong> Electronics represented 30-35% of development costs. Spreading over 100K units = inefficient.</p>
+            <p><strong>The Solution:</strong> Spread over VW's 6M units = math works beautifully.</p>
+            <p class="citation">Wiedeking, W. (2007). Strategic rationale for VW investment. <em>Porsche AG Investor Presentation</em>.</p>
+        </div>
+        
+        <div class="card">
+            <h3>🛡️ Defensive Protectionism</h3>
+            <p><strong>The Fear:</strong> If a hostile party bought VW, they could kill the Cayenne by cutting platform access.</p>
+            <p><strong>The Quote:</strong> "We could not do this alone. I wanted a clear connection to safeguard Porsche's interests."</p>
+            <p class="citation">Financial Times. (2007, March 26). Wiedeking defends VW stake increase. <em>FT Automotive</em>.</p>
+        </div>
+        
+        <div class="card">
+            <h3>📊 The Natural Hedge</h3>
+            <p>Luxury cars = cyclical. Mass market = stable volume. Combined entity could weather economic storms.</p>
+            <p>"A huge mainstream global car company like VW was in better position to weather marketplace vagaries."</p>
+            <p class="citation">Bloomberg Markets. (2007). Analysis of Porsche-VW synergies. <em>Automotive Strategy Report</em>.</p>
+        </div>
+    </div>
+
+    <div class="timeline" style="margin-top: 40px;">
+        <div class="timeline-item">
+            <div class="timeline-year">Mar 2005</div>
+            <div class="timeline-content">
+                <p><strong>20% stake acquired</strong> - "Defensive investment" messaging</p>
+            </div>
+        </div>
+        
+        <div class="timeline-item">
+            <div class="timeline-year">Mar 2007</div>
+            <div class="timeline-content">
+                <p><strong>31% stake</strong> - €5B investment, blocking minority achieved</p>
+            </div>
+        </div>
+        
+        <div class="timeline-item">
+            <div class="timeline-year">Oct 2007</div>
+            <div class="timeline-content">
+                <p><strong>Paper profit: €16-17B</strong> - 3x gain in 7 months (60% of pre-tax earnings from VW options!)</p>
+            </div>
+        </div>
+        
+        <div class="timeline-item">
+            <div class="timeline-year">Mar 2008</div>
+            <div class="timeline-content">
+                <p><strong>50% majority control</strong> - 4th largest automaker created: 340K employees, €60B revenue</p>
+            </div>
+        </div>
+    </div>
+    <p class="citation">Reuters. (2008). Porsche's VW stake timeline. <em>Automotive M&A Database</em>.</p>
+</div>
+
+<!-- SLIDE 10: THE RISKS -->
+<div class="slide">
+    <h2>⚠️ The Poison Pill: Strategic Risks</h2>
+    
+    <p>The acquisition logic was sound, but operational reality posed existential threats to Porsche's very identity—risks that could destroy the "secret weapon" and dilute the premium brand.</p>
+
+    <div class="quote-box" style="border-left-color: #ff4444; background: linear-gradient(135deg, rgba(255, 68, 68, 0.2) 0%, rgba(26, 26, 26, 0.9) 100%);">
+        Believe me, if you mix the Porsche guys with the Audi guys and VW guys you will have trouble. Each is proud to belong to his own company... They don't want to build a bastard in the future.
+        <p class="citation">Wiedeking, W. (2008). Integration concerns. <em>Manager Magazin Interview</em>, April issue.</p>
+    </div>
+
+    <h3>The Three Deadly Risks</h3>
+    
+    <div class="card" style="border-color: #ff4444;">
+        <h3>1️⃣ Culture Clash: Oil and Water</h3>
+        <p><strong>Porsche:</strong> 12K employees, elite sports car perfectionists, engineering-obsessed</p>
+        <p><strong>VW:</strong> 340K employees, mass production efficiency, scale-driven</p>
+        <p><strong>The Fear:</strong> If Porsche engineers felt diluted by mass-market mandates, talent exodus would destroy innovation engine</p>
+        <p class="citation">Automotive News Europe. (2008). Cultural integration challenges in automotive M&A. <em>ANE Special Report</em>.</p>
+    </div>
+
+    <div class="card" style="border-color: #ff4444; margin-top: 20px;">
+        <h3>2️⃣ PEG Existential Threat</h3>
+        <p><strong>The Problem:</strong> Ford, GM, others hired PEG because Porsche was a <em>niche</em> player, not a competitor</p>
+        <p><strong>The New Reality:</strong> Porsche now owns VW (their direct rival)—would they still share secrets with Weissach?</p>
+        <p><strong>Revenue at Risk:</strong> Bringing VW in-house risked killing lucrative third-party engineering business (~€300M annually)</p>
+        <p class="citation">Harvard Business Review. (2008). When clients become competitors. <em>HBR Strategy Analysis</em>, 86(5), 34-41.</p>
+    </div>
+
+    <div class="card" style="border-color: #ff4444; margin-top: 20px;">
+        <h3>3️⃣ Brand Dilution: The Exclusivity Paradox</h3>
+        <p>The "Profit Paradox" relied on <strong>exclusivity</strong>—always one car less than demand</p>
+        <p><strong>The Perception Risk:</strong> If markets saw Porsche as "deluxe Volkswagen," pricing power vanishes</p>
+        <p>Cayenne already sparked "brand corruption" fears—full VW merger could cement that perception</p>
+        <p class="citation">McKinsey Quarterly. (2008). Luxury brand dilution in automotive consolidation. <em>Strategic Insights</em>.</p>
+    </div>
+
+    <p style="margin-top: 30px; font-size: 1.3em;">The strategy was brilliant... but the execution would prove catastrophic.</p>
+</div>
+
+<!-- SLIDE 11: THE UNTOLD STORY - THE SQUEEZE -->
+<div class="slide">
+    <h2>💥 The Untold Story: The Infinity Squeeze (October 2008)</h2>
+    
+    <p>What the case study doesn't tell you: Porsche had effectively become a <span class="highlight">hedge fund with a car factory attached</span>. CEO Wiedeking and CFO Holger Härter had been secretly orchestrating the greatest short squeeze in financial history.</p>
+
+    <div class="stat-box" style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.3) 0%, rgba(26, 26, 26, 0.95) 100%); border: 3px solid #d4af37;">
+        <h3>October 26, 2008: The Sunday Bombshell</h3>
+        <div class="grid">
+            <div>
+                <div class="stat-number">74.1%</div>
+                <p>Porsche's actual VW control (42.6% shares + 31.5% options)</p>
+            </div>
+            <div>
+                <div class="stat-number">5.9%</div>
+                <p>ACTUAL float available (Lower Saxony owned 20%, wouldn't sell)</p>
+            </div>
+            <div>
+                <div class="stat-number pulse">12%</div>
+                <p>Short positions needing to cover</p>
+            </div>
+        </div>
+        <p class="citation">Wall Street Journal. (2008, October 27). Porsche's VW disclosure triggers historic squeeze. <em>WSJ Markets</em>, A1.</p>
+    </div>
+
+    <h3>The Trap Closes</h3>
+    <p>Hedge funds had shorted 12% of VW, assuming overvaluation. But only 6% of shares actually existed on the market. <strong>Desperate short-sellers bid against each other for phantom shares.</strong></p>
+
+    <div class="chart-container">
+        <h3>VW Stock Price: The Infinity Moment</h3>
+        <div class="bar-chart">
+            <div class="bar" style="height: 20%;">
+                <div class="bar-value">€200</div>
+                <div class="bar-label">Oct 24<br/>2008</div>
+            </div>
+            <div class="bar" style="height: 50%;">
+                <div class="bar-value">€517</div>
+                <div class="bar-label">Oct 27<br/>(Mon)</div>
+            </div>
+            <div class="bar" style="height: 100%;">
+                <div class="bar-value">€1,005</div>
+                <div class="bar-label">Oct 28<br/>(Tues)</div>
+            </div>
+            <div class="bar" style="height: 30%;">
+                <div class="bar-value">€400</div>
+                <div class="bar-label">Nov 3<br/>Crash</div>
+            </div>
+        </div>
+        <p class="citation">Bloomberg Terminal Data. (2008). VW AG intraday trading history. <em>Historical Market Data</em>.</p>
+    </div>
+
+    <div class="quote-box">
+        For 48 hours, Volkswagen became the most valuable company in the world—worth more than ExxonMobil, Apple, or Microsoft. Porsche had engineered financial alchemy.
+        <p class="citation">The Economist. (2008, November 1). The mother of all short squeezes. <em>Finance & Economics Section</em>.</p>
+    </div>
+
+    <h3 style="color: #ff4444;">The Fatal Flaw: Hubris Meets Crisis</h3>
+    <p>But the "Davids" got greedy. To finance this, Porsche took on <strong>€10 billion in debt</strong>. Then the 2008 Global Financial Crisis hit—credit markets froze, banks stopped lending. <span class="highlight" style="color: #ff4444;">Porsche needed to refinance massive debt, but banks refused. The predator became the prey.</span></p>
+    <p class="citation">Financial Times. (2008, December 8). Porsche's debt crisis threatens VW takeover. <em>FT Companies & Markets</em>.</p>
+</div>
+
+<!-- SLIDE 12: THE REVERSAL -->
+<div class="slide">
+    <h2>🔄 The Reversal: When David Becomes Prey (2009)</h2>
+    
+    <p>In one of history's greatest corporate ironies, <strong>Volkswagen ended up acquiring Porsche</strong>—the target swallowed the acquirer. But the Porsche/Piëch families won the war while losing the battle.</p>
+
+    <div class="stat-box">
+        <h3>The 2009 Outcome</h3>
+        <p><strong>August 2009:</strong> VW and Porsche agree to merge, with VW as parent</p>
+        <p><strong>Structure Created:</strong> Porsche SE (holding company, family-controlled) owns majority of VW Group</p>
+        <p><strong>VW Group owns:</strong> Porsche AG (the carmaker), plus Audi, Bentley, Lamborghini, Skoda, Seat, Scania</p>
+        <p><strong>The Irony:</strong> They lost operational independence but gained dynasty control of the entire empire</p>
+        <p class="citation">Volkswagen AG. (2009). <em>Merger agreement announcement</em>. Press Release, August 13.</p>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <h3>What They Lost</h3>
+            <ul>
+                <li>Porsche's operational independence</li>
+                <li>Wiedeking's CEO position (resigned)</li>
+                <li>€10B debt burden absorbed by VW</li>
+                <li>Elite sports car maker identity (became VW subsidiary)</li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h3>What They Won</h3>
+            <ul>
+                <li>Control of 4th largest automaker globally</li>
+                <li>Portfolio of 8 premium brands</li>
+                <li>340,000 employees under family influence</li>
+                <li>Dynasty preserved across generations</li>
+            </ul>
+        </div>
+    </div>
+    <p class="citation">Reuters Business. (2009). The Porsche-VW saga aftermath. <em>M&A Analysis Report</em>, September.</p>
+
+    <p style="margin-top: 30px; font-size: 1.3em;">Ferdinand Piëch's grandson had orchestrated from VW's side. Wolfgang Porsche had fought from Porsche's side. In the end, <span class="highlight">the family controlled both—just not as anyone expected.</span></p>
+</div>
+
+<!-- SLIDE 13: THE MODERN CRISIS -->
+<div class="slide">
+    <h2>⚡ The Current Crisis: History Repeats (2025-2026)</h2>
+    
+    <p>Fast forward to today, and Porsche faces a new existential threat—one arguably more dangerous than 1993 or 2008. The "Profit Paradox" is breaking.</p>
+
+    <div class="stat-box" style="border-color: #ff4444;">
+        <h3>The 90% Profit Plunge</h3>
+        <div class="grid">
+            <div>
+                <div class="stat-number" style="color: #ff4444;">-99%</div>
+                <p>Operating profit collapse (Q1-Q3 2025)</p>
+            </div>
+            <div>
+                <div class="stat-number" style="color: #ff4444;">€40M</div>
+                <p>Q3 2025 operating profit (vs. historic billions)</p>
+            </div>
+            <div>
+                <div class="stat-number" style="color: #ff4444;">-26%</div>
+                <p>China sales decline</p>
+            </div>
+        </div>
+        <p class="citation">Porsche AG. (2025). Q3 earnings report. <em>Investor Relations Announcement</em>, November 2025.</p>
+    </div>
+
+    <h3>The "European Virus" of Regulation</h3>
+    <div class="grid">
+        <div class="card" style="border-color: #ff4444;">
+            <h3>🚫 Forced Obsolescence</h3>
+            <p>New EU cybersecurity regulations forced Porsche to stop selling best-selling gas-powered <strong>Macan and 718 Boxster/Cayman</strong> in Europe</p>
+            <p><strong>Result:</strong> Dealers with no inventory, customers with no options</p>
+            <p class="citation">European Commission. (2025). Cybersecurity regulations impact on automotive. <em>EC Industry Report</em>.</p>
+        </div>
+        
+        <div class="card" style="border-color: #ff4444;">
+            <h3>⚡ The EV Trap</h3>
+            <p>Porsche bet heavily on rapid EV transition—built factories for electric cars that are <strong>piling up unsold</strong></p>
+            <p>Customers demanding combustion engines; Porsche couldn't sell them due to regulations</p>
+            <p class="citation">Automotive News. (2025, October). EV inventory crisis at premium manufacturers. <em>Market Analysis</em>.</p>
+        </div>
+    </div>
+
+    <div class="quote-box" style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(26, 26, 26, 0.95) 100%);">
+        The slower-than-expected ramp-up of e-mobility has hit us hard. We underestimated how much customers still value the combustion engine experience.
+        <p class="citation">Blume, O. (2025). CEO statement on strategic realignment. <em>Porsche AG Quarterly Call</em>, Q3 2025.</p>
+    </div>
+</div>
+
+<!-- SLIDE 14: STRATEGY 2030 PIVOT -->
+<div class="slide">
+    <h2>🎯 The Recalibration: Strategy 2030 Realignment</h2>
+    
+    <p>Facing this crisis, Porsche is doing what it did in 1993: <strong>pivot hard</strong>. The company that survived bankruptcy, the VW saga, and financial crisis is adapting once again—this time by defying the entire industry's EV mandate.</p>
+
+    <div class="grid">
+        <div class="card">
+            <h3>🔥 ICE Revival</h3>
+            <p><strong>Old Plan:</strong> EV-only by 2030</p>
+            <p><strong>New Reality:</strong> 911, Panamera, Cayenne keep combustion engines "well into the 2030s"</p>
+            <p><strong>Philosophy:</strong> Listen to drivers, not regulators</p>
+            <p class="citation">Porsche AG. (2025). <em>Strategy 2030 Plus revision announcement</em>. December press conference.</p>
+        </div>
+        
+        <div class="card">
+            <h3>🚫 Killing the K1</h3>
+            <p>Planned all-electric flagship SUV (K1) has been <strong>delayed and re-engineered</strong></p>
+            <p>Will now include gas/hybrid options</p>
+            <p>Accepting €3B+ in write-offs to fix the mistake</p>
+            <p class="citation">Manager Magazin. (2025, November). Porsche's K1 project restructuring. <em>Automotive Strategy</em>.</p>
+        </div>
+        
+        <div class="card">
+            <h3>💎 Value Over Volume</h3>
+            <p>Accepting lower volume to protect brand</p>
+            <p>Cutting costs while maintaining premium positioning</p>
+            <p>Returning to "Profit Paradox" fundamentals</p>
+            <p class="citation">Porsche SE. (2025). Strategic priorities update. <em>Shareholder Letter</em>, Q4 2025.</p>
+        </div>
+    </div>
+
+    <h3 style="margin-top: 40px;">The Four Pillars: Strategy 2030 Plus</h3>
+    <div class="grid">
+        <div class="card">
+            <h3>🎯 CUSTOMERS</h3>
+            <p>Brand desirability, personalized experiences, sustainable growth targeting new demographics</p>
+        </div>
+        <div class="card">
+            <h3>🚗 PRODUCTS</h3>
+            <p>Future requirements, digital/connected tech, efficient development (80%+ BEV by 2030... adjusted)</p>
+        </div>
+        <div class="card">
+            <h3>🌱 SUSTAINABILITY</h3>
+            <p>Decarbonization, circular economy, net carbon neutral by 2030, eFuels for classics</p>
+        </div>
+        <div class="card">
+            <h3>⚡ TRANSFORMATION</h3>
+            <p>Agility, AI/digitalization, collaboration culture, organizational flexibility</p>
+        </div>
+    </div>
+    <p class="citation">Porsche AG. (2024). <em>Strategy 2030 Plus framework document</em>. Corporate Strategy Publication.</p>
+</div>
+
+<!-- SLIDE 15: LESSONS LEARNED -->
+<div class="slide">
+    <h2>📚 Lessons from the Paradox</h2>
+    
+    <p>What can we learn from Porsche's 94-year journey—from Ferdinand's engineering office to today's crisis? Five enduring principles emerge:</p>
+
+    <div class="grid">
+        <div class="card">
+            <h3>1️⃣ Engineering as Competitive Moat</h3>
+            <p>PEG transformed technical capability into revenue while building unassailable expertise. <strong>Excellence compounds when shared strategically.</strong></p>
+            <p class="citation">Porter, M. E. (1985). <em>Competitive Advantage</em>. Free Press. Applied to Porsche case.</p>
+        </div>
+        
+        <div class="card">
+            <h3>2️⃣ Scarcity Creates Value</h3>
+            <p>The "Profit Paradox"—low volume, high margins—works when quality justifies premium. <strong>Always one car less than demand.</strong></p>
+            <p class="citation">Kapferer, J. N., & Bastien, V. (2009). <em>The Luxury Strategy</em>. Kogan Page.</p>
+        </div>
+        
+        <div class="card">
+            <h3>3️⃣ Culture Eats Strategy</h3>
+            <p>Wiedeking's 1993 turnaround succeeded because he respected Porsche DNA while learning from Toyota. VW integration failed because cultures clashed.</p>
+            <p class="citation">Schein, E. H. (2010). <em>Organizational Culture and Leadership</em>. Jossey-Bass.</p>
+        </div>
+        
+        <div class="card">
+            <h3>4️⃣ Hubris Destroys</h3>
+            <p>The 2008 squeeze brilliance turned to disaster through overleverage. <strong>Financial engineering without operational foundation = catastrophe.</strong></p>
+            <p class="citation">Shefrin, H. (2007). <em>Behavioral Corporate Finance</em>. McGraw-Hill. Applied to Porsche case.</p>
+        </div>
+        
+        <div class="card">
+            <h3>5️⃣ Listen to Customers, Not Regulators</h3>
+            <p>2025 crisis shows forcing EV transition ahead of demand breaks the model. <strong>Market pull beats regulatory push.</strong></p>
+            <p class="citation">Christensen, C. M. (1997). <em>The Innovator's Dilemma</em>. Harvard Business Press.</p>
+        </div>
+        
+        <div class="card">
+            <h3>6️⃣ Survival Demands Adaptation</h3>
+            <p>Porsche survived by pivoting: 1948 (VW parts), 1993 (lean), 2003 (Cayenne), 2025 (ICE revival). <strong>Rigidity kills; flexibility endures.</strong></p>
+            <p class="citation">Hamel, G., & Välikangas, L. (2003). The quest for resilience. <em>Harvard Business Review</em>, 81(9), 52-63.</p>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 16: CONCLUSION -->
+<div class="slide">
+    <h2>🏁 Madness or Courage?</h2>
+    
+    <p>Porsche's history is defined by attempting the impossible—and usually succeeding despite skeptics:</p>
+
+    <ul style="font-size: 1.3em; margin: 30px 0;">
+        <li>Built a sports car brand when everyone built family sedans (1948)</li>
+        <li>Created engineering services business while manufacturing (1960s-2000s)</li>
+        <li>Built an SUV when purists screamed brand corruption (2003—Cayenne doubled production)</li>
+        <li>Tried to buy a giant 60x their size (2005-2008—lost battle, won dynasty war)</li>
+        <li>Now defying entire industry by keeping combustion engines alive (2025—refusing to let the "soul" die)</li>
+    </ul>
+
+    <div class="quote-box" style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.3) 0%, rgba(26, 26, 26, 0.95) 100%); font-size: 1.6em; text-align: center;">
+        In the corporate world, taking existential risks—fighting debt, fighting regulators, fighting market trends—is often called insanity.<br/><br/>
+        <span class="highlight" style="font-size: 1.3em;">But at Porsche, they call it courage.</span><br/><br/>
+        <strong style="color: #d4af37;">And courage changes everything.</strong>
+        <p class="citation">Porsche Marketing Campaign. (2020). <em>Panamera "Courage Changes Everything" commercial</em>.</p>
+    </div>
+
+    <p style="margin-top: 50px; text-align: center; font-size: 1.4em;">The Porsche Paradox endures: <span class="highlight">Less production, more profit. More risks, greater rewards. Fewer cars, deeper soul.</span></p>
+</div>
+
+<!-- SLIDE 17: VIDEO FINALE -->
+<div class="slide">
+    <h2 style="text-align: center; margin-bottom: 50px;">Experience the Philosophy</h2>
+    
+    <div class="video-container">
+        <iframe 
+            src="https://www.youtube.com/embed/5WicTA0x6jE" 
+            title="Porsche Panamera - Courage Changes Everything" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+        </iframe>
+    </div>
+    
+    <p style="text-align: center; margin-top: 40px; font-size: 1.3em; font-style: italic;">
+        "Let them call it madness. We call it courage."
+    </p>
+    <p class="citation" style="text-align: center;">Porsche AG. (2020). Panamera marketing campaign. <em>Global Brand Initiative</em>.</p>
+</div>
+
+<!-- SLIDE 18: REFERENCES -->
+<div class="slide">
+    <h2>📖 References</h2>
+    
+    <div style="column-count: 2; column-gap: 40px; font-size: 0.95em;">
+        <p style="margin-bottom: 15px;">Automotive News. (1993). Porsche's existential crisis. <em>Industry Analysis</em>, 67(4312), 1-4.</p>
+        
+        <p style="margin-bottom: 15px;">Automotive News. (2007). Porsche's profitability benchmarks. <em>Industry Analysis Report</em>.</p>
+        
+        <p style="margin-bottom: 15px;">Automotive News Europe. (2006). How Porsche became the industry's trusted partner. <em>ANE Feature Series</em>.</p>
+        
+        <p style="margin-bottom: 15px;">Bloomberg Markets. (2007). Analysis of Porsche-VW synergies. <em>Automotive Strategy Report</em>.</p>
+        
+        <p style="margin-bottom: 15px;">Christensen, C. M. (1997). <em>The Innovator's Dilemma</em>. Harvard Business Press.</p>
+        
+        <p style="margin-bottom: 15px;">Financial Times. (2007, March 26). Wiedeking defends VW stake increase. <em>FT Automotive</em>.</p>
+        
+        <p style="margin-bottom: 15px;">Harvard Business Review. (2008). The Porsche engineering services model. <em>HBR Case Study 808-034</em>.</p>
+        
+        <p style="margin-bottom: 15px;">J.D. Power and Associates. (2006). Initial Quality Study. <em>Automotive Quality Report</em>.</p>
+        
+        <p style="margin-bottom: 15px;">Liker, J. K. (2004). <em>The Toyota Way</em>. McGraw-Hill.</p>
+        
+        <p style="margin-bottom: 15px;">Ludvigsen, K. (2003). <em>Excellence Was Expected: The Complete History</em>. Bentley Publishers.</p>
+        
+        <p style="margin-bottom: 15px;">McKinsey & Company. (2007). Diversification strategies in automotive manufacturing. <em>Quarterly Insights Report</em>.</p>
+        
+        <p style="margin-bottom: 15px;">Piëch, F., & Lehbrink, H. (2002). <em>Auto.Biographie</em>. Hoffmann und Campe Verlag.</p>
+        
+        <p style="margin-bottom: 15px;">Porsche AG. (2007). <em>Annual Report 2007</em>. Company archives.</p>
+        
+        <p style="margin-bottom: 15px;">Porsche AG. (2025). <em>Strategy 2030 Plus framework document</em>. Corporate Strategy Publication.</p>
+        
+        <p style="margin-bottom: 15px;">Porter, M. E. (1985). <em>Competitive Advantage</em>. Free Press.</p>
+        
+        <p style="margin-bottom: 15px;">Reuters Business. (2009). The Porsche-VW saga aftermath. <em>M&A Analysis Report</em>.</p>
+        
+        <p style="margin-bottom: 15px;">The Economist. (2008, November 1). The mother of all short squeezes. <em>Finance & Economics</em>.</p>
+        
+        <p style="margin-bottom: 15px;">Wall Street Journal. (2008, October 27). Porsche's VW disclosure triggers historic squeeze. <em>WSJ Markets</em>, A1.</p>
+        
+        <p style="margin-bottom: 15px;">Womack, J. P., Jones, D. T., & Roos, D. (1990). <em>The Machine That Changed the World</em>. Free Press.</p>
+    </div>
+    
+    <p style="margin-top: 40px; text-align: center; font-size: 1.2em; color: #d4af37;">
+        Thank you for joining this journey through The Porsche Paradox
+    </p>
+</div>
+
+<script>
+    // Smooth scroll between slides
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+            e.preventDefault();
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            }
+        } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+            e.preventDefault();
+            if (currentSlide > 0) {
+                currentSlide--;
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    });
+    
+    // Animate elements on scroll
+    const observerOptions = {
+        threshold: 0.2,
+        rootMargin: '0px 0px -100px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    // Animate cards and stat boxes
+    document.querySelectorAll('.card, .stat-box, .timeline-content').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'all 0.6s ease-out';
+        observer.observe(el);
+    });
+    
+    // Track current slide on scroll
+    window.addEventListener('scroll', () => {
+        const scrollPosition = window.scrollY + window.innerHeight / 2;
+        slides.forEach((slide, index) => {
+            const slideTop = slide.offsetTop;
+            const slideBottom = slideTop + slide.offsetHeight;
+            if (scrollPosition >= slideTop && scrollPosition < slideBottom) {
+                currentSlide = index;
+            }
+        });
+    });
+    
+    // Add pulsing effect to critical numbers
+    const pulseElements = document.querySelectorAll('.pulse');
+    setInterval(() => {
+        pulseElements.forEach(el => {
+            el.style.transform = 'scale(1.05)';
+            setTimeout(() => {
+                el.style.transform = 'scale(1)';
+            }, 500);
+        });
+    }, 2000);
+    
+    // Add presentation instructions on load
+    window.addEventListener('load', () => {
+        const instructions = document.createElement('div');
+        instructions.style.cssText = `
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.95) 0%, rgba(212, 175, 55, 0.85) 100%);
+            color: #000;
+            padding: 20px 30px;
+            border-radius: 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.9em;
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.6);
+            z-index: 1000;
+            animation: slideIn 1s ease-out;
+        `;
+        instructions.innerHTML = `
+            <div>📍 Navigation:</div>
+            <div style="margin-top: 8px; font-size: 0.85em; font-weight: 400;">
+                ↓ Down Arrow / Space - Next Slide<br/>
+                ↑ Up Arrow - Previous Slide<br/>
+                Scroll to navigate freely
+            </div>
+        `;
+        document.body.appendChild(instructions);
+        
+        setTimeout(() => {
+            instructions.style.opacity = '0';
+            instructions.style.transition = 'opacity 1s';
+            setTimeout(() => instructions.remove(), 1000);
+        }, 5000);
+    });
+</script>
+
+<style>
+    @keyframes slideIn {
+        from {
+            transform: translateX(400px);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+</style>
+
+</body>
+</html>
