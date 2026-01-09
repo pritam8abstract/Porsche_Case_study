@@ -3,816 +3,419 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI-Related Unemployment: A Divided Society</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <title>AI Related Unemployment - Dhritabrata Swarnakar</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Space+Grotesk:wght@400;700&display=swap');
+        :root {
+            --bg-color: #0a0a0a;
+            --text-color: #e0e0e0;
+            --accent-color: #00d4ff; /* Cyber blue */
+            --accent-secondary: #ff0055; /* Radical Red for contrast */
+            --card-bg: #161616;
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
 
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: #0a0a0f;
-            overflow: hidden;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            overflow: hidden; /* Prevent scrolling */
             height: 100vh;
-            color: #fff;
+            width: 100vw;
         }
 
-        .presentation {
-            width: 100%;
-            height: 100vh;
+        /* Slide Container */
+        .slides-container {
             position: relative;
-            background: radial-gradient(ellipse at top, #1a1a2e 0%, #0a0a0f 100%);
+            height: 100%;
+            width: 100%;
         }
 
         .slide {
-            width: 100%;
-            height: 100%;
             position: absolute;
             top: 0;
             left: 0;
-            opacity: 0;
-            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
+            align-items: center;
+            padding: 40px;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out, transform 0.6s ease;
+            transform: scale(0.95);
+            pointer-events: none; /* Hide non-active slides */
+            background: radial-gradient(circle at top right, #1a1a2e 0%, #000000 100%);
         }
 
         .slide.active {
             opacity: 1;
-            z-index: 1;
+            transform: scale(1);
+            pointer-events: all;
+            z-index: 10;
         }
 
-        .slide-content {
-            width: 90%;
-            max-width: 1400px;
-            height: 85%;
-            position: relative;
-        }
-
-        /* Animated background elements */
-        .bg-grid {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: 0;
-            animation: gridMove 20s linear infinite;
-        }
-
-        @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
-
-        .glow-orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.3;
-            z-index: 0;
-            animation: float 8s ease-in-out infinite;
-        }
-
-        .orb-1 {
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, #6366f1, transparent);
-            top: -10%;
-            right: -5%;
-            animation-delay: 0s;
-        }
-
-        .orb-2 {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, #8b5cf6, transparent);
-            bottom: -15%;
-            left: -10%;
-            animation-delay: 2s;
-        }
-
-        .orb-3 {
-            width: 350px;
-            height: 350px;
-            background: radial-gradient(circle, #ec4899, transparent);
-            top: 40%;
-            left: 50%;
-            animation-delay: 4s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -30px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
-        }
-
+        /* Typography */
         h1 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 7em;
-            font-weight: 900;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #fff 0%, #6366f1 50%, #ec4899 100%);
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, var(--accent-color), #ffffff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.03em;
+            text-align: center;
         }
 
         h2 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 3.5em;
-            font-weight: 700;
-            margin-bottom: 40px;
-            color: #fff;
-            letter-spacing: -0.02em;
+            font-size: 2.2rem;
+            color: var(--accent-color);
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 2px solid var(--accent-secondary);
+            padding-bottom: 10px;
         }
 
         h3 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.8em;
-            font-weight: 600;
-            margin-bottom: 25px;
-            color: #e2e8f0;
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 1rem;
         }
 
-        .subtitle {
-            font-size: 2em;
-            color: #94a3b8;
-            font-weight: 300;
-            line-height: 1.5;
-            max-width: 900px;
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: #cccccc;
+            max-width: 800px;
+            text-align: center;
         }
 
-        /* Title Slide - Slide 1 */
-        .title-slide .slide-content {
+        .highlight {
+            color: var(--accent-secondary);
+            font-weight: bold;
+        }
+
+        /* Slide 1 - Title Specifics */
+        .presenter-info {
+            margin-top: 3rem;
+            text-align: center;
+            border: 1px solid var(--accent-color);
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(0, 212, 255, 0.05);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+        }
+        .presenter-name { font-size: 1.5rem; font-weight: bold; color: white; }
+        .presenter-details { font-size: 1rem; color: #aaa; }
+
+        /* Slide 2 - Grid for Quotes */
+        .quote-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 80%;
+            margin-top: 20px;
+        }
+        .quote-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-left: 4px solid var(--accent-color);
+            border-radius: 5px;
+            font-style: italic;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .quote-author {
+            display: block;
+            margin-top: 10px;
+            font-style: normal;
+            font-weight: bold;
+            color: var(--accent-color);
+            text-align: right;
+        }
+
+        /* Slide 3 - Technical Explanation */
+        .tech-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            width: 80%;
+        }
+        .tech-visual {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            padding: 20px;
+            border: 1px solid #333;
+            color: #0f0;
+            width: 45%;
+            border-radius: 5px;
+        }
+
+        /* Slide 4 - Ideology */
+        .ideology-split {
+            display: flex;
+            width: 90%;
+            gap: 40px;
+        }
+        .ideology-box {
+            flex: 1;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            border-top: 3px solid;
+        }
+        .cap-box { border-color: var(--accent-color); }
+        .left-box { border-color: var(--accent-secondary); }
+
+        /* Slide 5 - Data Viz & Citations */
+        .chart-container {
+            width: 600px;
+            margin-bottom: 20px;
+        }
+        .bar-chart {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
-        .massive-stat {
-            margin: 60px 0;
-            padding: 50px 60px;
-            background: rgba(99, 102, 241, 0.05);
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            border-radius: 24px;
-            backdrop-filter: blur(20px);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .massive-stat::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #6366f1, transparent);
-        }
-
-        .stat-number-large {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 8em;
-            font-weight: 900;
-            background: linear-gradient(135deg, #6366f1, #ec4899);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1;
-            margin-bottom: 15px;
-        }
-
-        .stat-label-large {
-            font-size: 1.5em;
-            color: #cbd5e1;
-            font-weight: 400;
-        }
-
-        .stat-citation {
-            margin-top: 20px;
-            font-size: 0.95em;
-            color: #64748b;
-            font-style: italic;
-        }
-
-        .intro-text {
-            font-size: 1.4em;
-            color: #cbd5e1;
-            line-height: 1.8;
-            max-width: 1000px;
-        }
-
-        /* Perspectives - Slide 2 */
-        .perspectives-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .perspective-box {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px 35px;
-            backdrop-filter: blur(10px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .perspective-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            transition: all 0.4s;
-        }
-
-        .perspective-box.optimist::before { background: linear-gradient(90deg, #10b981, #34d399); }
-        .perspective-box.pessimist::before { background: linear-gradient(90deg, #ef4444, #f87171); }
-        .perspective-box.realist::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
-
-        .perspective-box:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-        }
-
-        .perspective-icon {
-            font-size: 3em;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .perspective-label {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.5em;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: #fff;
-        }
-
-        .perspective-text {
-            color: #cbd5e1;
-            line-height: 1.7;
-            font-size: 1.05em;
-            margin-bottom: 15px;
-        }
-
-        .perspective-quote {
-            margin-top: 20px;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.3);
-            border-left: 3px solid;
-            border-radius: 8px;
-            font-style: italic;
-            font-size: 0.95em;
-            color: #e2e8f0;
-        }
-
-        .optimist .perspective-quote { border-color: #10b981; }
-        .pessimist .perspective-quote { border-color: #ef4444; }
-        .realist .perspective-quote { border-color: #f59e0b; }
-
-        /* AI Explanation - Slide 3 */
-        .split-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            height: 100%;
-            align-items: center;
-        }
-
-        .explanation-points {
-            list-style: none;
-            padding: 0;
-        }
-
-        .explanation-points li {
-            padding: 25px 30px;
-            margin: 20px 0;
-            background: rgba(15, 23, 42, 0.5);
-            border-left: 4px solid #6366f1;
-            border-radius: 12px;
-            font-size: 1.15em;
-            line-height: 1.7;
-            color: #e2e8f0;
-            transition: all 0.3s;
-        }
-
-        .explanation-points li:hover {
-            background: rgba(15, 23, 42, 0.8);
-            transform: translateX(10px);
-        }
-
-        .explanation-points strong {
-            color: #fff;
-            font-weight: 700;
-        }
-
-        .magic-quote {
-            margin-top: 40px;
-            padding: 40px;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(236, 72, 153, 0.15));
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            border-radius: 20px;
-            position: relative;
-        }
-
-        .magic-quote::before {
-            content: '"';
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 6em;
-            font-family: serif;
-            color: rgba(99, 102, 241, 0.2);
-            line-height: 0.5;
-        }
-
-        .magic-quote p {
-            font-size: 1.3em;
-            line-height: 1.7;
-            color: #f1f5f9;
-            padding-left: 60px;
-        }
-
-        .chart-box {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px;
-            height: 500px;
-            backdrop-filter: blur(10px);
-        }
-
-        /* Data Slide - Slide 4 */
-        .data-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            height: 100%;
-            align-items: start;
-            padding-top: 20px;
-        }
-
-        .debate-box {
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(245, 158, 11, 0.1));
-            border: 1px solid rgba(251, 191, 36, 0.3);
-            padding: 35px;
-            border-radius: 20px;
-            margin-bottom: 30px;
-        }
-
-        .debate-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.6em;
-            font-weight: 700;
-            color: #fbbf24;
-            margin-bottom: 15px;
-        }
-
-        .debate-text {
-            color: #e2e8f0;
-            line-height: 1.8;
-            font-size: 1.1em;
-        }
-
-        .key-stats {
-            list-style: none;
-            padding: 0;
-        }
-
-        .key-stats li {
-            padding: 20px 25px;
-            margin: 15px 0;
-            background: rgba(15, 23, 42, 0.5);
-            border-left: 4px solid #ec4899;
-            border-radius: 12px;
-            color: #e2e8f0;
-            font-size: 1.1em;
-            line-height: 1.6;
-        }
-
-        .key-stats strong {
-            color: #fff;
-            font-weight: 700;
-        }
-
-        /* Solutions Slide - Slide 5 */
-        .solutions-layout {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 50px;
-            height: 100%;
-            align-items: start;
-            padding-top: 20px;
-        }
-
-        .policy-grid {
-            display: grid;
-            gap: 20px;
-        }
-
-        .policy-item {
-            padding: 25px 30px;
-            background: rgba(15, 23, 42, 0.5);
-            border-left: 4px solid #6366f1;
-            border-radius: 12px;
-            transition: all 0.3s;
-        }
-
-        .policy-item:hover {
-            background: rgba(15, 23, 42, 0.8);
-            transform: translateX(8px);
-        }
-
-        .policy-title {
-            font-weight: 700;
-            font-size: 1.3em;
-            color: #fff;
-            margin-bottom: 10px;
-        }
-
-        .policy-desc {
-            color: #cbd5e1;
-            line-height: 1.7;
-        }
-
-        .consensus-box {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(52, 211, 153, 0.15));
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            padding: 35px;
-            border-radius: 20px;
-            margin-top: 30px;
-        }
-
-        .consensus-title {
-            font-weight: 700;
-            font-size: 1.4em;
-            color: #34d399;
-            margin-bottom: 15px;
-        }
-
-        .consensus-text {
-            color: #e2e8f0;
-            line-height: 1.8;
-            font-size: 1.05em;
-        }
-
-        .references-box {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 35px;
-            max-height: 700px;
-            overflow-y: auto;
-            backdrop-filter: blur(10px);
-        }
-
-        .references-box h3 {
-            margin-bottom: 25px;
-            color: #fff;
-        }
-
-        .references-box ol {
-            padding-left: 25px;
-        }
-
-        .references-box li {
-            color: #cbd5e1;
-            line-height: 1.8;
-            margin-bottom: 18px;
-            font-size: 0.95em;
-        }
-
-        /* Presenter Info */
-        .presenter-badge {
-            position: absolute;
-            bottom: 50px;
-            left: 0;
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 20px 35px;
-            border-radius: 50px;
-            backdrop-filter: blur(20px);
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .presenter-name {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            font-size: 1.2em;
-            color: #fff;
-        }
-
-        .presenter-id {
-            color: #64748b;
-            font-size: 1em;
-        }
-
-        /* Navigation */
-        .navigation {
-            position: fixed;
-            bottom: 50px;
-            right: 50px;
-            display: flex;
             gap: 15px;
-            z-index: 1000;
+        }
+        .bar-group { display: flex; align-items: center; }
+        .bar-label { width: 150px; text-align: right; margin-right: 15px; font-size: 0.9rem;}
+        .bar {
+            height: 25px;
+            background: linear-gradient(90deg, var(--accent-color), #005f73);
+            border-radius: 0 5px 5px 0;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            font-size: 0.8rem;
+            color: #000;
+            font-weight: bold;
+            transition: width 1s ease-out;
+            width: 0; /* Animated via JS */
+        }
+        .citations {
+            font-size: 0.7rem;
+            color: #777;
+            text-align: left;
+            width: 80%;
+            margin-top: 20px;
+            border-top: 1px solid #333;
+            padding-top: 10px;
         }
 
-        .nav-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
-            padding: 18px 35px;
-            border-radius: 50px;
+        /* Navigation Controls */
+        .controls {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        button {
+            background: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 10px 20px;
             cursor: pointer;
-            font-size: 1em;
-            font-weight: 600;
-            font-family: 'Inter', sans-serif;
-            backdrop-filter: blur(20px);
+            font-size: 1rem;
+            border-radius: 5px;
             transition: all 0.3s;
         }
 
-        .nav-btn:hover:not(:disabled) {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.4);
-            transform: translateY(-2px);
+        button:hover {
+            background: var(--accent-color);
+            color: #000;
         }
 
-        .nav-btn:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
+        .slide-number {
+            position: absolute;
+            bottom: 30px;
+            left: 40px;
+            font-family: monospace;
+            color: #555;
         }
 
-        .slide-counter {
-            position: fixed;
-            bottom: 50px;
-            left: 50px;
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-weight: 600;
-            color: #fff;
-            z-index: 1000;
-            backdrop-filter: blur(20px);
-            font-family: 'Space Grotesk', sans-serif;
-        }
-
-        .citation-text {
-            color: #64748b;
-            font-size: 0.9em;
-            margin-top: 15px;
-            font-style: italic;
-        }
-
-        /* Scrollbar styling */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: rgba(99, 102, 241, 0.5);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(99, 102, 241, 0.7);
-        }
     </style>
 </head>
 <body>
-    <div class="bg-grid"></div>
-    <div class="glow-orb orb-1"></div>
-    <div class="glow-orb orb-2"></div>
-    <div class="glow-orb orb-3"></div>
 
-    <div class="presentation">
-        <!-- Slide 1: Title -->
-        <div class="slide active title-slide">
-            <div class="slide-content">
-                <h1>AI-Related<br>Unemployment</h1>
-                <p class="subtitle">How Society Remains Divided in the Age of Artificial Intelligence</p>
-                
-                <div class="massive-stat">
-                    <div class="stat-number-large">300M+</div>
-                    <div class="stat-label-large">Jobs Potentially Affected by AI Globally</div>
-                    <div class="stat-citation">Goldman Sachs, 2023</div>
-                </div>
+<div class="slides-container">
 
-                <p class="intro-text">
-                    Despite widespread discourse, society remains deeply divided on AI's impact on employment. 
-                    This presentation explores the various perspectives, capabilities, and socioeconomic implications 
-                    of artificial intelligence in the modern workforce.
+    <div class="slide active" id="slide-1">
+        <h1>AI Related Unemployment</h1>
+        <h3 style="color: var(--accent-secondary); margin-top: -10px;">The Division, The Magic, and The Cost</h3>
+        
+        <div class="presenter-info">
+            <div class="presenter-name">Dhritabrata Swarnakar</div>
+            <div class="presenter-details">Roll No: 25MSG1R16</div>
+            <div class="presenter-details">DMS, NIT Warangal</div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide-2">
+        <h2>The Societal Divide</h2>
+        <p>Even with clear news outcomes, society remains fractured between "Doomers" and "Boomers." The mentality is split not by facts, but by faith in the future.</p>
+        
+        <div class="quote-grid">
+            <div class="quote-card">
+                "AI will be the greatest force for economic empowerment and a lot of people getting rich we have ever seen."
+                <span class="quote-author">- Sam Altman (OpenAI)</span>
+            </div>
+            <div class="quote-card">
+                "The risk isn't people losing their job to AI. It's losing their job to somebody else who knows how to use AI."
+                <span class="quote-author">- Hadi Partovi</span>
+            </div>
+            <div class="quote-card">
+                "We are creating God... The pace of progress is incredibly fast. The risk of something seriously dangerous is real."
+                <span class="quote-author">- Pessimist View (Generalized)</span>
+            </div>
+            <div class="quote-card">
+                "Almost 40% of global employment is exposed to AI... in advanced economies, 60% of jobs."
+                <span class="quote-author">- IMF Report 2025</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide-3">
+        <h2>Improving "The Magic"</h2>
+        <div class="tech-container">
+            <div style="width: 50%;">
+                <h3>Just a Statistical Model?</h3>
+                <p style="text-align: left;">
+                    At its core, LLMs are <span class="highlight">Next Token Predictors</span>. They don't "know" truth; they calculate the probability of the next word based on billions of parameters.
                 </p>
+                <p style="text-align: left;">
+                    Yet, this simple statistical prediction creates an emergent property—a "magic" that mimics reasoning, creativity, and empathy, effectively automating the one thing we thought was safe: <strong>Cognitive Labor</strong>.
+                </p>
+            </div>
+            <div class="tech-visual">
+                > INPUT: "The future of work is..."<br><br>
+                > CALCULATING PROBABILITIES:<br>
+                - "uncertain" (45%)<br>
+                - "automated" (30%)<br>
+                - "bright" (15%)<br><br>
+                > OUTPUT: "uncertain."<br>
+                <span style="color: #666;">// This "guessing" game is now replacing Junior Analysts.</span>
+            </div>
+        </div>
+    </div>
 
-                <div class="presenter-badge">
-                    <div>
-                        <div class="presenter-name">Dhritabrata Swarnakar</div>
-                        <div class="presenter-id">25MSG1R16 • DMS NIW W</div>
-                    </div>
+    <div class="slide" id="slide-4">
+        <h2>The Ideological Crossroads</h2>
+        <p>Is AI the "Ultimate Capitalism" or a trigger for forced structural change?</p>
+        
+        <div class="ideology-split">
+            <div class="ideology-box cap-box">
+                <h3>Ultimate Capitalism</h3>
+                <p style="font-size: 0.9rem; text-align: left;">
+                    Capitalism seeks to lower the cost of production. AI offers <strong>Zero Marginal Cost</strong> labor. 
+                    <br><br>
+                    If corporations can generate value without paying wages, profit is maximized, but who buys the products? This is the paradox of "Hyper-Efficiency."
+                </p>
+            </div>
+            <div class="ideology-box left-box">
+                <h3>The "Invading" Ideology</h3>
+                <p style="font-size: 0.9rem; text-align: left;">
+                    Do we need "invading left ideologies" to forcefully stop technology? 
+                    <br><br>
+                    Calls for <strong>Universal Basic Income (UBI)</strong>, Robot Taxes, and strict regulation are rising. Without these "socialist" safety nets, the technological displacement might lead to societal collapse.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide-5">
+        <h2>The Data Reality (2025)</h2>
+        
+        <div class="chart-container">
+            <div class="bar-chart">
+                <div class="bar-group">
+                    <div class="bar-label">Global Jobs Exposed</div>
+                    <div class="bar" style="width: 40%;">40% (IMF)</div>
+                </div>
+                <div class="bar-group">
+                    <div class="bar-label">Advanced Economies</div>
+                    <div class="bar" style="width: 60%; background: var(--accent-secondary);">60% Exposed</div>
+                </div>
+                <div class="bar-group">
+                    <div class="bar-label">US Job Risk</div>
+                    <div class="bar" style="width: 25%;">2.5% Displacement (Goldman)</div>
+                </div>
+                <div class="bar-group">
+                    <div class="bar-label">Public Fear</div>
+                    <div class="bar" style="width: 57%;">57% View Risk > Benefit (Pew)</div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 2: Perspectives -->
-        <div class="slide">
-            <div class="slide-content">
-                <h2>A Society Divided: Three Perspectives</h2>
-                
-                <div class="perspectives-grid">
-                    <div class="perspective-box optimist">
-                        <span class="perspective-icon">🌟</span>
-                        <div class="perspective-label">The Optimists</div>
-                        <p class="perspective-text"><strong>Belief:</strong> AI will eliminate mundane work, creating new opportunities and enhancing productivity.</p>
-                        <div class="perspective-quote">
-                            "AI won't take your job. A person using AI will."
-                            <div class="citation-text">Common tech industry mantra<br>World Economic Forum, 2023</div>
-                        </div>
-                    </div>
-
-                    <div class="perspective-box pessimist">
-                        <span class="perspective-icon">⚠️</span>
-                        <div class="perspective-label">The Pessimists</div>
-                        <p class="perspective-text"><strong>Belief:</strong> Mass unemployment is inevitable as AI replaces human workers across industries.</p>
-                        <div class="perspective-quote">
-                            "We're approaching a time when machines will be able to outperform humans at almost any task."
-                            <div class="citation-text">Elon Musk, CNBC Interview, 2023</div>
-                        </div>
-                    </div>
-
-                    <div class="perspective-box realist">
-                        <span class="perspective-icon">⚖️</span>
-                        <div class="perspective-label">The Realists</div>
-                        <p class="perspective-text"><strong>Belief:</strong> Jobs will transform; some disappear, others emerge. Adaptation and policy are crucial.</p>
-                        <div class="perspective-quote">
-                            "The question is not whether AI will eliminate jobs, but how we can ensure the benefits are widely shared."
-                            <div class="citation-text">MIT Technology Review, 2024</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="presenter-badge">
-                    <div class="presenter-name">Dhritabrata Swarnakar</div>
-                    <div class="presenter-id">25MSG1R16</div>
-                </div>
-            </div>
+        <div class="citations">
+            <strong>Citations:</strong><br>
+            1. IMF (2025). <em>"The Global Impact of AI: Mind the Gap"</em>. Cerutti et al. Washington, DC.<br>
+            2. Goldman Sachs (2025). <em>"How Will AI Affect the Global Workforce?"</em> Global Economics Analyst.<br>
+            3. Pew Research Center (2025). <em>"Public Opinion on AI & Society."</em> September Report.<br>
+            4. CSET Georgetown (2024). <em>"The Surprising Power of Next Word Prediction."</em>
         </div>
+    </div>
 
-        <!-- Slide 3: AI Explanation -->
-        <div class="slide">
-            <div class="slide-content">
-                <h2>What is AI Actually? The "Magic" Explained</h2>
-                
-                <div class="split-layout">
-                    <div>
-                        <h3>The Reality: Statistical Pattern Prediction</h3>
-                        <ul class="explanation-points">
-                            <li><strong>Large Language Models (LLMs):</strong> Trained on massive datasets to predict the next word/token based on patterns</li>
-                            <li><strong>Not "Thinking":</strong> No consciousness, understanding, or reasoning—just statistical correlations</li>
-                            <li><strong>Emergent Abilities:</strong> As models scale, they develop unexpected capabilities (translation, coding, reasoning)</li>
-                        </ul>
+</div>
 
-                        <div class="magic-quote">
-                            <p>The magic is in the scale. A simple algorithm, when given billions of parameters and trillions of words, begins to exhibit human-like capabilities.</p>
-                            <div class="citation-text">Ilya Sutskever, OpenAI Co-founder, 2023</div>
-                        </div>
-                    </div>
+<div class="controls">
+    <button onclick="prevSlide()">&#8592; Prev</button>
+    <button onclick="nextSlide()">Next &#8594;</button>
+</div>
+<div class="slide-number" id="slide-indicator">1 / 5</div>
 
-                    <div>
-                        <h3>Capability Growth Over Time</h3>
-                        <div class="chart-box">
-                            <canvas id="capabilityChart"></canvas>
-                        </div>
-                        <p class="citation-text" style="text-align: center;">Source: Stanford AI Index Report, 2024</p>
-                    </div>
-                </div>
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const indicator = document.getElementById('slide-indicator');
 
-                <div class="presenter-badge">
-                    <div class="presenter-name">Dhritabrata Swarnakar</div>
-                    <div class="presenter-id">25MSG1R16</div>
-                </div>
-            </div>
-        </div>
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.classList.remove('active');
+            if (i === index) {
+                slide.classList.add('active');
+            }
+        });
+        indicator.innerText = `${index + 1} / ${totalSlides}`;
+        
+        // Trigger animations for bars if on last slide
+        if(index === 4) {
+             // Simple re-trigger trick or just let CSS transition handle it
+        }
+    }
 
-        <!-- Slide 4: Data & Capitalism -->
-        <div class="slide">
-            <div class="slide-content">
-                <h2>The Numbers: AI Impact & Economic Questions</h2>
-                
-                <div class="data-layout">
-                    <div>
-                        <h3>Job Displacement Projections</h3>
-                        <div class="chart-box">
-                            <canvas id="displacementChart"></canvas>
-                        </div>
-                        <p class="citation-text">Sources: McKinsey Global Institute (2023), Goldman Sachs Economics Research (2023)</p>
-                    </div>
+    function nextSlide() {
+        if (currentSlide < totalSlides - 1) {
+            currentSlide++;
+            showSlide(currentSlide);
+        }
+    }
 
-                    <div>
-                        <h3>Is This Ultimate Capitalism?</h3>
-                        <div class="debate-box">
-                            <div class="debate-title">The Debate:</div>
-                            <p class="debate-text">AI represents peak capitalist efficiency: maximizing profit by replacing expensive human labor with cheap computational power. Yet this concentrates wealth among tech companies and investors.</p>
-                        </div>
+    function prevSlide() {
+        if (currentSlide > 0) {
+            currentSlide--;
+            showSlide(currentSlide);
+        }
+    }
 
-                        <ul class="key-stats">
-                            <li><strong>Wealth Concentration:</strong> Top 5 AI companies hold $8.5T market cap (2024)</li>
-                            <li><strong>Productivity vs. Wages:</strong> AI boosts productivity 40% but wage growth remains stagnant at 2.7%</li>
-                            <li><strong>The Question:</strong> Does unfettered AI development serve humanity or shareholder value?</li>
-                        </ul>
-                        <p class="citation-text">Sources: Bloomberg Markets (2024), Bureau of Labor Statistics (2024), Oxford Economics (2023)</p>
-                    </div>
-                </div>
+    // Keyboard navigation
+    document.addEventListener('keydown', function(event) {
+        if(event.key === "ArrowRight") {
+            nextSlide();
+        } else if(event.key === "ArrowLeft") {
+            prevSlide();
+        }
+    });
 
-                <div class="presenter-badge">
-                    <div class="presenter-name">Dhritabrata Swarnakar</div>
-                    <div class="presenter-id">25MSG1R16</div>
-                </div>
-            </div>
-        </div>
+</script>
 
-        <!-- Slide 5: Solutions -->
-        <div class="slide">
-            <div class="slide-content">
-                <h2>The Path Forward: Do We Need Intervention?</h2>
-                
-                <div class="solutions-layout">
-                    <div>
-                        <h3>Policy Options Under Debate</h3>
-                        <div class="policy-grid">
-                            <div class="policy-item">
-                                <div class="policy-title">Regulatory Intervention</div>
-                                <p class="policy-desc">EU AI Act, licensing requirements, mandatory impact assessments</p>
-                            </div>
-                            <div class="policy-item">
-                                <div class="policy-title">Social Safety Nets</div>
-                                <p class="policy-desc">Universal Basic Income (UBI), job retraining programs, transition support</p>
-                            </div>
-                            <div class="policy-item">
-                                <div class="policy-title">Wealth Redistribution</div>
-                                <p class="policy-desc">AI profit taxes, automation taxes, public ownership models</p>
-                            </div>
-                            <div class="policy-item">
-                                <div class="policy-title">Market-Based Approach</div>
-                                <p class="policy-desc">Let innovation proceed, trust market adaptation</p>
-                            </div>
-                        </div>
-
-                        <div class="consensus-box">
-                            <div class="consensus-title">The Consensus:</div>
-                            <p class="consensus-text">Neither extreme ideology (forceful halt vs. unchecked acceleration) serves humanity. Evidence-based policy, democratic governance, and inclusive growth are essential.</p>
-                            <p class="citation-text">Source: OECD AI Policy Observatory, 2024</p>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="references-box">
-                            <h3>References</h3>
-                            <ol>
-                                <li>Goldman Sachs Economics Research. (2023). "The Potentially Large Effects of Artificial Intelligence on Economic Growth."</li>
-                                <li>World Economic Forum. (2023). "Future of Jobs Report 2023."</li>
-                                <li>MIT Technology Review. (2024). "The Real Threat of AI to Jobs Isn't What You Think."</li>
-                                <li>Musk, E. (2023). Interview with CNBC on AI implications.</li>
-                                <li>Sutskever, I. (2023). OpenAI presentations on emergent AI capabilities.</li>
-                                <li>Stanford University. (2024). "AI Index Report 2024."</li>
-                                <li>McKinsey Global Institute. (2023). "The Economic Potential of Generative AI."</li>
-                                <li>U.S. Bureau of Labor Statistics. (2024). Employment and wage data.</li>
-                                <li>Bloomberg Markets. (2024). Technology sector market capitalization analysis.</li>
-                                <li>Oxford Economics. (2023). "The Impact of AI on the Global Workforce."</li>
-                                <li>European Commission. (2024). "EU AI Act: First Regulation on Artificial Intelligence."</li>
-                                <li>OECD AI Policy Observatory. (2024). Policy recommendations and analysis.</li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="presenter-badge">
-                    <div class="presenter-name">Dhritabrata Swarnakar</div>
-                    <div class="presenter
+</body>
+</html>
